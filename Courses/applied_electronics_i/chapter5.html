@@ -5,63 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chapter 5 - Applied Electronics I</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        nav {
-            background-color: rgba(0, 123, 255, 0.9);
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        nav h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        nav li {
-            margin-left: 2rem;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        nav a:hover {
-            color: #ffd700;
-        }
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        h1 {
-            text-align: center;
-            padding: 2rem;
-        }
-        p {
-            text-align: center;
-            padding: 1rem;
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
         }
     </style>
 </head>
-<body>
-    <nav>
-        <h1><i class="fas fa-bolt"></i> EE Infographics</h1>
-        <ul>
-            <li><a href="../index.html#home">Home</a></li>
-            <li><a href="../index.html#categories">Categories</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="../index.html#contact">Contact</a></li>
-        </ul>
+<body class="leading-relaxed">
+
+    <nav class="bg-gray-100 p-4 shadow-md">
+        <div class="container mx-auto">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center text-sm text-gray-600 mb-3">
+                <a href="../../index.html" class="text-blue-600 hover:text-blue-800">Home</a>
+                <span class="mx-2">></span>
+                <a href="../../index.html#applied-electronics-i" class="text-blue-600 hover:text-blue-800">Applied Electronics I</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-800 font-semibold">Chapter 5</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-blue-600 hover:text-blue-800 font-semibold">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <span class="text-gray-500">|</span>
+                    
+                    <!-- Course Selector -->
+                    <div class="relative">
+                        <button class="text-gray-700 font-semibold hover:text-blue-600 flex items-center" onclick="toggleCourseDropdown()">
+                            Applied Electronics I <i class="fas fa-chevron-down ml-1"></i>
+                        </button>
+                        <div id="courseDropdown" class="absolute left-0 mt-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 hidden">
+                            <a href="../../Courses/oop/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">OOP</a>
+                            <a href="../../Courses/signal_and_system_analysis/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Signal and System Analysis</a>
+                            <a href="../../Courses/computational_methods/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Computational Methods</a>
+                            <a href="../../Courses/applied_electronics_i/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-blue-50">Applied Electronics I</a>
+                            <a href="../../Courses/workshop_2/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Workshop 2</a>
+                            <a href="../../Courses/applied_electronics_lab/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Applied Electronics Lab</a>
+                            <a href="../../Courses/materials/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Materials</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chapter Navigation -->
+                <div class="flex items-center space-x-2 mt-2 md:mt-0">
+                    <a href="chapter4.html" class="px-3 py-1 text-gray-600 hover:text-blue-600" title="Previous Chapter">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="chapter1.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">1</a>
+                    <a href="chapter2.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">2</a>
+                    <a href="chapter3.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">3</a>
+                    <a href="chapter4.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">4</a>
+                    <a href="chapter5.html" class="px-3 py-1 bg-blue-600 text-white rounded">5</a>
+                    <span class="px-3 py-1 text-gray-400" title="No Next Chapter">
+                        <i class="fas fa-chevron-right"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
     </nav>
-    <h1>Chapter 5</h1>
-    <p>Placeholder for Chapter 5 of Applied Electronics I.</p>
+
+    <main class="container mx-auto p-4 md:p-8">
+        <h1 class="text-4xl font-bold text-center mb-8">Chapter 5 - Applied Electronics I</h1>
+        <p class="text-center text-gray-600">Placeholder for Chapter 5 of Applied Electronics I.</p>
+    </main>
+
+    <script>
+        function toggleCourseDropdown() {
+            const dropdown = document.getElementById('courseDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('courseDropdown');
+            const button = event.target.closest('button');
+            if (!button || !button.onclick || !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>

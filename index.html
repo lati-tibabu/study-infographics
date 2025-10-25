@@ -14,6 +14,117 @@
             color: #333;
             min-height: 100vh;
         }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            display: none;
+            width: 250px;
+            background-color: rgba(255, 255, 255, 0.95);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            z-index: 1000;
+            overflow-y: auto;
+            padding-top: 80px; /* Account for nav height */
+        }
+        .sidebar.show {
+            display: block;
+        }
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+        }
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sidebar-menu li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: #007bff;
+            border-left: 4px solid #007bff;
+        }
+        .course-hidden {
+            display: none !important;
+        }
+        .back-to-all {
+            display: none;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+        .back-to-all.show {
+            display: block;
+        }
+        .back-link {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+        .back-link:hover {
+            background-color: rgba(0, 123, 255, 0.1);
+            color: #0056b3;
+        }
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .sidebar-toggle:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        @media (max-width: 1023px) {
+            .sidebar-toggle {
+                display: block;
+            }
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+        .main-content.sidebar-open {
+            margin-left: 250px;
+        }
+        @media (min-width: 1024px) {
+            .sidebar {
+                display: block;
+            }
+            .main-content {
+                margin-left: 250px;
+            }
+        }
         nav {
             background-color: rgba(0, 123, 255, 0.9);
             color: white;
@@ -22,10 +133,20 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1001;
+            width: 100%;
         }
         nav h1 {
             margin: 0;
             font-size: 1.5rem;
+        }
+        .nav-left {
+            display: flex;
+            align-items: center;
         }
         nav ul {
             list-style: none;
@@ -35,6 +156,7 @@
         }
         nav li {
             margin-left: 2rem;
+            position: relative;
         }
         nav a {
             color: white;
@@ -44,6 +166,33 @@
         nav a:hover {
             color: #ffd700;
         }
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(0, 123, 255, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            border-radius: 5px;
+        }
+        .dropdown-content a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
         .hero {
             background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
             padding: 5rem 2rem;
@@ -51,6 +200,7 @@
             color: white;
             position: relative;
             overflow: hidden;
+            padding-top: 8rem; /* Account for fixed nav */
         }
         .hero::before {
             content: '';
@@ -78,6 +228,7 @@
         .categories {
             padding: 4rem 2rem;
             background-color: #f8f9fa;
+            padding-top: 6rem; /* Account for fixed nav */
         }
         .category {
             margin-bottom: 4rem;
@@ -169,11 +320,51 @@
     </style>
 </head>
 <body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-book-open"></i> Courses
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#categories" class="active"><i class="fas fa-th-large"></i> All Courses</a></li>
+                <li><a href="#oop"><i class="fas fa-code"></i> OOP</a></li>
+                <li><a href="#signal-and-system-analysis"><i class="fas fa-wave-square"></i> Signal and System Analysis</a></li>
+                <li><a href="#computational-methods"><i class="fas fa-calculator"></i> Computational Methods</a></li>
+                <li><a href="#applied-electronics-i"><i class="fas fa-bolt"></i> Applied Electronics I</a></li>
+                <li><a href="#workshop-2"><i class="fas fa-tools"></i> Workshop 2</a></li>
+                <li><a href="#applied-electronics-lab"><i class="fas fa-flask"></i> Applied Electronics Lab</a></li>
+                <li><a href="#materials"><i class="fas fa-atom"></i> Materials</a></li>
+            </ul>
+            <div class="back-to-all">
+                <a href="#categories" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to All Courses
+                </a>
+            </div>
+        </aside>
+
+        <div class="main-content">
     <nav>
-        <h1><i class="fas fa-bolt"></i> EE Infographics</h1>
+        <div class="nav-left">
+            <button class="sidebar-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1><i class="fas fa-bolt"></i> EE Infographics</h1>
+        </div>
         <ul>
             <li><a href="#home">Home</a></li>
-            <li><a href="#categories">Categories</a></li>
+            <li class="dropdown">
+                <a href="#categories">Courses <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="#oop">OOP</a>
+                    <a href="#signal-and-system-analysis">Signal and System Analysis</a>
+                    <a href="#computational-methods">Computational Methods</a>
+                    <a href="#applied-electronics-i">Applied Electronics I</a>
+                    <a href="#workshop-2">Workshop 2</a>
+                    <a href="#applied-electronics-lab">Applied Electronics Lab</a>
+                    <a href="#materials">Materials</a>
+                </div>
+            </li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -183,7 +374,7 @@
         <p>Visualize Complex Concepts - Master Electrical Engineering Through Interactive Diagrams and Visual Learning</p>
     </section>
     <section class="categories" id="categories">
-        <div class="category">
+        <div class="category" id="oop">
             <h2>OOP</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/oop/chapter1.html'">
@@ -208,7 +399,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="signal-and-system-analysis">
             <h2>Signal and System Analysis</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter1.html'">
@@ -233,7 +424,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="computational-methods">
             <h2>Computational Methods</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/computational_methods/chapter1.html'">
@@ -258,7 +449,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="applied-electronics-i">
             <h2>Applied Electronics I</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter1.html'">
@@ -283,7 +474,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="workshop-2">
             <h2>Workshop 2</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/workshop_2/chapter1.html'">
@@ -308,7 +499,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="applied-electronics-lab">
             <h2>Applied Electronics Lab</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter1.html'">
@@ -333,7 +524,7 @@
                 </div>
             </div>
         </div>
-        <div class="category">
+        <div class="category" id="materials">
             <h2>Materials</h2>
             <div class="cards">
                 <div class="card" onclick="window.location.href='Courses/materials/chapter1.html'">
@@ -362,5 +553,159 @@
     <footer id="contact">
         <p>&copy; 2025 Electrical Engineering Infographics. All rights reserved. <i class="fas fa-envelope"></i> contact@ee-infographics.com</p>
     </footer>
+    </div> <!-- End main-content -->
+    </div> <!-- End container -->
+
+    <script>
+        // Sidebar navigation functionality
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const mainContent = document.querySelector('.main-content');
+
+            if (window.innerWidth < 1024) {
+                sidebar.classList.toggle('show');
+                mainContent.classList.toggle('sidebar-open');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+            const backLink = document.querySelector('.back-link');
+            const sections = document.querySelectorAll('.category');
+            const backToAll = document.querySelector('.back-to-all');
+
+            let currentFilteredCourse = null;
+
+            // Function to show all courses
+            function showAllCourses() {
+                sections.forEach(section => {
+                    section.classList.remove('course-hidden');
+                });
+                currentFilteredCourse = null;
+                backToAll.classList.remove('show');
+                document.querySelector('.sidebar-menu li:first-child a').classList.add('active');
+            }
+
+            // Function to show only selected course
+            function showSingleCourse(courseId) {
+                sections.forEach(section => {
+                    if (section.id === courseId) {
+                        section.classList.remove('course-hidden');
+                    } else {
+                        section.classList.add('course-hidden');
+                    }
+                });
+                currentFilteredCourse = courseId;
+                backToAll.classList.add('show');
+                document.querySelector('.sidebar-menu li:first-child a').classList.remove('active');
+            }
+
+            // Function to update active sidebar link
+            function updateActiveLink() {
+                if (currentFilteredCourse) {
+                    // When a specific course is filtered, highlight that course in sidebar
+                    sidebarLinks.forEach(link => {
+                        const href = link.getAttribute('href');
+                        if (href === '#' + currentFilteredCourse) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                    return;
+                }
+
+                // Default behavior: highlight based on scroll position
+                const scrollPosition = window.scrollY + 100; // Offset for nav height
+
+                sections.forEach((section, index) => {
+                    if (section.classList.contains('course-hidden')) return;
+
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        // Remove active class from all links
+                        sidebarLinks.forEach(link => link.classList.remove('active'));
+
+                        // Add active class to current section link
+                        if (sidebarLinks[index + 1]) { // +1 because first link is "All Courses"
+                            sidebarLinks[index + 1].classList.add('active');
+                        }
+                    }
+                });
+
+                // Special case for "All Courses" when at top
+                if (window.scrollY < sections[0].offsetTop - 50) {
+                    sidebarLinks.forEach(link => link.classList.remove('active'));
+                    sidebarLinks[0].classList.add('active');
+                }
+            }
+
+            // Smooth scrolling for sidebar links
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+
+                    if (targetId === '#categories') {
+                        // "All Courses" clicked - show all courses
+                        showAllCourses();
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    } else {
+                        // Specific course clicked - show only that course
+                        const courseId = targetId.substring(1); // Remove the '#'
+                        showSingleCourse(courseId);
+
+                        const targetSection = document.querySelector(targetId);
+                        if (targetSection) {
+                            const offsetTop = targetSection.offsetTop - 80; // Account for nav height
+                            window.scrollTo({
+                                top: offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+
+                    // Close sidebar on mobile after clicking
+                    if (window.innerWidth < 1024) {
+                        document.querySelector('.sidebar').classList.remove('show');
+                        document.querySelector('.main-content').classList.remove('sidebar-open');
+                    }
+                });
+            });
+
+            // Handle back to all courses link
+            backLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                showAllCourses();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // Update active link on scroll
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // Initial call
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(e) {
+                const sidebar = document.querySelector('.sidebar');
+                const toggleBtn = document.querySelector('.sidebar-toggle');
+
+                if (window.innerWidth < 1024 &&
+                    !sidebar.contains(e.target) &&
+                    !toggleBtn.contains(e.target) &&
+                    sidebar.classList.contains('show')) {
+                    sidebar.classList.remove('show');
+                    document.querySelector('.main-content').classList.remove('sidebar-open');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

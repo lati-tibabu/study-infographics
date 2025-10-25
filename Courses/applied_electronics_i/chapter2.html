@@ -96,6 +96,59 @@
         <p class="text-xl text-white text-center mt-2 opacity-90">The Essential One-Way Electrical Valve</p>
     </header>
 
+    <nav class="bg-gray-100 p-4 shadow-md">
+        <div class="container mx-auto">
+            <!-- Breadcrumbs -->
+            <div class="flex items-center text-sm text-gray-600 mb-3">
+                <a href="../../index.html" class="text-blue-600 hover:text-blue-800">Home</a>
+                <span class="mx-2">></span>
+                <a href="../../index.html#applied-electronics-i" class="text-blue-600 hover:text-blue-800">Applied Electronics I</a>
+                <span class="mx-2">></span>
+                <span class="text-gray-800 font-semibold">Chapter 2</span>
+            </div>
+            
+            <div class="flex flex-wrap items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="../../index.html" class="text-blue-600 hover:text-blue-800 font-semibold">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                    <span class="text-gray-500">|</span>
+                    
+                    <!-- Course Selector -->
+                    <div class="relative">
+                        <button class="text-gray-700 font-semibold hover:text-blue-600 flex items-center" onclick="toggleCourseDropdown()">
+                            Applied Electronics I <i class="fas fa-chevron-down ml-1"></i>
+                        </button>
+                        <div id="courseDropdown" class="absolute left-0 mt-1 w-64 bg-white border border-gray-300 rounded-md shadow-lg z-10 hidden">
+                            <a href="../../Courses/oop/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">OOP</a>
+                            <a href="../../Courses/signal_and_system_analysis/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Signal and System Analysis</a>
+                            <a href="../../Courses/computational_methods/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Computational Methods</a>
+                            <a href="../../Courses/applied_electronics_i/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 bg-blue-50">Applied Electronics I</a>
+                            <a href="../../Courses/workshop_2/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Workshop 2</a>
+                            <a href="../../Courses/applied_electronics_lab/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Applied Electronics Lab</a>
+                            <a href="../../Courses/materials/chapter1.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Materials</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Chapter Navigation -->
+                <div class="flex items-center space-x-2 mt-2 md:mt-0">
+                    <a href="chapter1.html" class="px-3 py-1 text-gray-600 hover:text-blue-600" title="Previous Chapter">
+                        <i class="fas fa-chevron-left"></i>
+                    </a>
+                    <a href="chapter1.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">1</a>
+                    <a href="chapter2.html" class="px-3 py-1 bg-blue-600 text-white rounded">2</a>
+                    <a href="chapter3.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">3</a>
+                    <a href="chapter4.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">4</a>
+                    <a href="chapter5.html" class="px-3 py-1 bg-gray-200 text-gray-700 rounded hover:bg-gray-300">5</a>
+                    <a href="chapter3.html" class="px-3 py-1 text-gray-600 hover:text-blue-600" title="Next Chapter">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <main class="container mx-auto p-4 md:p-8">
 
         <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
@@ -259,6 +312,20 @@
     </footer>
 
     <script>
+        function toggleCourseDropdown() {
+            const dropdown = document.getElementById('courseDropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('courseDropdown');
+            const button = event.target.closest('button');
+            if (!button || !button.onclick || !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
 
             // --- Utility Functions ---
