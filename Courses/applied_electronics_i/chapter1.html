@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The World of Semiconductors: An Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --color-primary: #0077B6;
+            --color-secondary: #00B4D8;
+            --color-accent1: #FFB703;
+            --color-accent2: #FB8500;
+            --color-text-dark: #222;
+            --color-text-light: #555;
+            --color-bg: #f8f9fa;
+            --color-card: #ffffff;
+        }
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: var(--color-bg);
+            color: var(--color-text-dark);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+                max-height: 350px;
+            }
+        }
+        .atom-diagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 180px;
+            height: 180px;
+            margin: 1rem auto;
+        }
+        .atom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: bold;
+            color: white;
+            background-color: var(--color-primary);
+            width: 50px;
+            height: 50px;
+            position: relative;
+        }
+        .atom-center {
+            background-color: var(--color-accent2);
+            grid-column: 2;
+            grid-row: 2;
+            z-index: 10;
+        }
+        .atom-neighbor-n { grid-column: 2; grid-row: 1; }
+        .atom-neighbor-s { grid-column: 2; grid-row: 3; }
+        .atom-neighbor-w { grid-column: 1; grid-row: 2; }
+        .atom-neighbor-e { grid-column: 3; grid-row: 2; }
+        .bond {
+            position: absolute;
+            background-color: var(--color-secondary);
+            z-index: 5;
+        }
+        .bond-v {
+            width: 8px;
+            height: 65px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .bond-h {
+            height: 8px;
+            width: 65px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .atom-neighbor-n .bond-v { top: 50%; }
+        .atom-neighbor-s .bond-v { bottom: 50%; }
+        .atom-neighbor-w .bond-h { left: 50%; }
+        .atom-neighbor-e .bond-h { right: 50%; }
+        .energy-band {
+            border: 2px solid;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+
+    <header class="w-full p-8" style="background-color: var(--color-primary);">
+        <h1 class="text-4xl md:text-5xl font-bold text-white text-center">The World of Semiconductors</h1>
+        <p class="text-xl text-white text-center mt-2 opacity-90">From Pure Silicon to the P-N Junction</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">1. The Atomic Foundation</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    All electronics are built on materials, and all materials are made of atoms. A semiconductor's unique properties begin with its <strong>valence electrons</strong>—the outermost electrons that form bonds with other atoms.
+                </p>
+                <div class="atom-diagram-grid">
+                    <div class="atom atom-neighbor-n">Si <div class="bond bond-v"></div></div>
+                    <div class="atom atom-neighbor-w">Si <div class="bond bond-h"></div></div>
+                    <div class="atom atom-center">Si</div>
+                    <div class="atom atom-neighbor-e">Si <div class="bond bond-h"></div></div>
+                    <div class="atom atom-neighbor-s">Si <div class="bond bond-v"></div></div>
+                </div>
+                <h3 class="text-lg font-semibold text-center mt-4">Covalent Bonding in Silicon</h3>
+                <p class="text-sm text-center" style="color: var(--color-text-light);">
+                    Silicon (Si), a tetravalent atom, has 4 valence electrons. To become stable, it forms 4 strong <strong>covalent bonds</strong> with its neighbors, creating a uniform, stable crystal lattice.
+                </p>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">2. Classifying Materials by Energy</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    An electron's ability to move depends on its energy. The <strong>Valence Band</strong> is where electrons are in bonds. The <strong>Conduction Band</strong> is where they are free to move. The <strong>Energy Gap ($E_g$)</strong> between them defines the material.
+                </p>
+                <div class="chart-container" style="height: 350px;">
+                    <canvas id="energyGapChart"></canvas>
+                </div>
+                <p class="text-sm text-center mt-4" style="color: var(--color-text-light);">
+                    Semiconductors have a small, non-zero gap, allowing electrons to jump with a moderate amount of energy (like heat), enabling controlled conductivity.
+                </p>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-md p-6 md:col-span-2">
+                <h2 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">3. The Pure (Intrinsic) Semiconductor</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    An intrinsic semiconductor is chemically pure, like a perfect silicon crystal. At room temperature, thermal energy is just enough to break some covalent bonds, creating mobile charge carriers.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-3">Electron-Hole Pair Generation</h3>
+                        <div class="w-full max-w-sm mx-auto p-4 rounded-lg" style="background-color: var(--color-bg);">
+                            <div class="energy-band" style="border-color: var(--color-secondary); background-color: #fff;">Conduction Band <span>&#8212;</span> <span style="color: var(--color-accent2);">&#9679;</span> Free Electron</div>
+                            <div class="text-center font-bold text-2xl my-2" style="color: var(--color-primary);">&#8593;</div>
+                            <div class="text-center text-sm font-semibold" style="color: var(--color-accent2);">Energy (Heat) breaks bond</div>
+                            <div class="text-center font-bold text-2xl my-2" style="color: var(--color-primary);">&#8593;</div>
+                            <div class="energy-band" style="border-color: var(--color-primary); background-color: #fff;">Valence Band <span>&#8212;</span> <span style="color: var(--color-primary);">&#9675;</span> Hole Created</div>
+                        </div>
+                        <p class="text-sm mt-3" style="color: var(--color-text-light);">
+                            When an electron jumps to the conduction band, it leaves a vacancy called a <strong>hole</strong>. This hole acts as a positive charge carrier. In pure material, <strong>Electrons = Holes</strong>.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-3">Two Types of Current</h3>
+                        <div class="mb-4">
+                            <h4 class="font-bold" style="color: var(--color-accent2);">Drift Current</h4>
+                            <p class="text-sm" style="color: var(--color-text-light);">The movement of carriers caused by an applied <strong>Electric Field</strong>. Electrons move one way, holes move the other.</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold" style="color: var(--color-accent2);">Diffusion Current</h4>
+                            <p class="text-sm" style="color: var(--color-text-light);">The natural movement of carriers from a region of <strong>High Concentration</strong> to one of <strong>Low Concentration</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-md p-6 md:col-span-2">
+                <h2 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">4. Engineering Conductivity (Extrinsic)</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    We rarely use pure semiconductors. Instead, we perform <strong>Doping</strong>—intentionally adding impurities to create an excess of one type of charge carrier.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-center" style="color: var(--color-accent2);">N-Type (Negative)</h3>
+                        <p class="text-sm text-center mb-3" style="color: var(--color-text-light);">Doped with <strong>Pentavalent</strong> atoms (5 valence electrons).</p>
+                        <div class="w-full p-4 rounded-lg text-center" style="background-color: var(--color-bg);">
+                            <span class="text-6xl font-bold" style="color: var(--color-accent2);">P</span>
+                            <p class="font-semibold">Phosphorus (Donor)</p>
+                            <p class="text-sm mt-2">4 electrons bond, leaving 1 <strong>Free Electron</strong> as a majority carrier.</p>
+                        </div>
+                        <div class="chart-container" style="height: 220px; max-height: 250px;">
+                            <canvas id="nTypeChart"></canvas>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-center" style="color: var(--color-primary);">P-Type (Positive)</h3>
+                        <p class="text-sm text-center mb-3" style="color: var(--color-text-light);">Doped with <strong>Trivalent</strong> atoms (3 valence electrons).</p>
+                        <div class="w-full p-4 rounded-lg text-center" style="background-color: var(--color-bg);">
+                            <span class="text-6xl font-bold" style="color: var(--color-primary);">B</span>
+                            <p class="font-semibold">Boron (Acceptor)</p>
+                            <p class="text-sm mt-2">3 electrons bond, creating 1 <strong>Hole</strong> as a majority carrier.</p>
+                        </div>
+                        <div class="chart-container" style="height: 220px; max-height: 250px;">
+                            <canvas id="pTypeChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="bg-white rounded-lg shadow-md p-6 md:col-span-2">
+                <h2 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">5. The P-N Junction: The Diode's Core</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    The most basic electronic component is formed by joining P-type and N-type material. The interaction at this boundary is the key to all modern electronics.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-3">Formation of the Depletion Region</h3>
+                        <div class="flex flex-col space-y-4 items-center">
+                            <div class="flex w-full max-w-xs">
+                                <div class="w-1/2 p-4 font-bold text-center text-white rounded-l-md" style="background-color: var(--color-primary);">P-Type<br>(Many Holes)</div>
+                                <div class="w-1/2 p-4 font-bold text-center text-white rounded-r-md" style="background-color: var(--color-accent2);">N-Type<br>(Many Electrons)</div>
+                            </div>
+                            <div class="text-3xl font-bold" style="color: var(--color-primary);">&darr;</div>
+                            <div class="font-semibold" style="color: var(--color-text-dark);">Diffusion & Recombination Begin</div>
+                            <div class="flex w-full max-w-xs rounded-md" style="background-color: var(--color-bg);">
+                                <div class="w-1/3 p-3 text-center" style="color: var(--color-primary);">P-Region</div>
+                                <div class="w-1/3 p-3 text-center border-l-2 border-r-2 border-gray-400 border-dashed">
+                                    <div class="text-xs font-bold">Depletion Region</div>
+                                    <div class="text-xl font-bold" style="color: var(--color-primary);">- - -</div>
+                                    <div class="text-xl font-bold" style="color: var(--color-accent2);">+ + +</div>
+                                </div>
+                                <div class="w-1/3 p-3 text-center" style="color: var(--color-accent2);">N-Region</div>
+                            </div>
+                        </div>
+                        <p class="text-sm mt-3" style="color: var(--color-text-light);">
+                            Electrons diffuse from N to P, and holes from P to N. They recombine near the junction, leaving behind fixed ions. This area, empty of mobile carriers, is the <strong>Depletion Region</strong>.
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-center mb-3">The Built-in Potential Barrier</h3>
+                        <p class="text-base mb-4" style="color: var(--color-text-light);">
+                            The fixed ions create an internal electric field, which in turn creates a voltage barrier. This barrier opposes further diffusion and establishes equilibrium.
+                        </p>
+                        <div class="flex justify-around">
+                            <div class="text-center">
+                                <div class="text-6xl font-bold" style="color: var(--color-primary);">~0.7 V</div>
+                                <div class="text-lg font-semibold">For Silicon (Si)</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-6xl font-bold" style="color: var(--color-accent1);">~0.3 V</div>
+                                <div class="text-lg font-semibold">For Germanium (Ge)</div>
+                            </div>
+                        </div>
+                        <p class="text-sm mt-4" style="color: var(--color-text-light);">
+                            An external voltage must be applied to overcome this "turn-on" barrier to allow significant current to flow.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="text-center p-6 mt-8" style="background-color: var(--color-text-dark);">
+        <p class="text-sm text-gray-300">Infographic generated based on "Basic Semiconductor Theory".</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                } else {
+                    return label;
+                }
+            };
+
+            const wrapLabel = (label) => {
+                if (label.length <= 16) return label;
+                const words = label.split(' ');
+                const lines = [];
+                let currentLine = '';
+                words.forEach(word => {
+                    if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                        lines.push(currentLine.trim());
+                        currentLine = word + ' ';
+                    } else {
+                        currentLine += word + ' ';
+                    }
+                });
+                lines.push(currentLine.trim());
+                return lines;
+            };
+
+            const sharedOptions = {
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        },
+                        backgroundColor: '#333',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 12 },
+                        padding: 10,
+                        cornerRadius: 4
+                    },
+                    legend: {
+                        labels: {
+                            font: {
+                                size: 12
+                            },
+                            color: '#555'
+                        }
+                    }
+                }
+            };
+
+            const ctxGap = document.getElementById('energyGapChart');
+            if (ctxGap) {
+                new Chart(ctxGap, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Insulator (e.g., Diamond)', 'Semiconductor (Si)', 'Conductor (e.g., Copper)'].map(wrapLabel),
+                        datasets: [{
+                            label: 'Energy Gap (eV) at 300K',
+                            data: [5.5, 1.12, 0],
+                            backgroundColor: [
+                                'rgba(251, 133, 0, 0.7)',
+                                'rgba(0, 180, 216, 0.7)',
+                                'rgba(0, 119, 182, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgb(251, 133, 0)',
+                                'rgb(0, 180, 216)',
+                                'rgb(0, 119, 182)'
+                            ],
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        ...sharedOptions,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Energy (eV)',
+                                    color: '#555'
+                                }
+                            },
+                            y: {
+                                ticks: { color: '#555' }
+                            }
+                        },
+                        plugins: {
+                            ...sharedOptions.plugins,
+                            legend: { display: false }
+                        }
+                    }
+                });
+            }
+
+            const ctxN = document.getElementById('nTypeChart');
+            if (ctxN) {
+                new Chart(ctxN, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Electrons (Majority)', 'Holes (Minority)'],
+                        datasets: [{
+                            label: 'Carrier Concentration',
+                            data: [95, 5],
+                            backgroundColor: [
+                                'rgb(251, 133, 0)',
+                                'rgb(200, 200, 200)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        ...sharedOptions,
+                        plugins: {
+                            ...sharedOptions.plugins,
+                            legend: { position: 'bottom', ...sharedOptions.plugins.legend }
+                        }
+                    }
+                });
+            }
+
+            const ctxP = document.getElementById('pTypeChart');
+            if (ctxP) {
+                new Chart(ctxP, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Holes (Majority)', 'Electrons (Minority)'],
+                        datasets: [{
+                            label: 'Carrier Concentration',
+                            data: [95, 5],
+                            backgroundColor: [
+                                'rgb(0, 119, 182)',
+                                'rgb(200, 200, 200)'
+                            ],
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: {
+                        ...sharedOptions,
+                        plugins: {
+                            ...sharedOptions.plugins,
+                            legend: { position: 'bottom', ...sharedOptions.plugins.legend }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

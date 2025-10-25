@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electrical Engineering Infographics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+        nav {
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        nav h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        nav li {
+            margin-left: 2rem;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #ffd700;
+        }
+        .hero {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            padding: 5rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .hero p {
+            font-size: 1.4rem;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .categories {
+            padding: 4rem 2rem;
+            background-color: #f8f9fa;
+        }
+        .category {
+            margin-bottom: 4rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        .category h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #007bff;
+            font-size: 2.5rem;
+            position: relative;
+        }
+        .category h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #007bff;
+        }
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        .card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 2rem;
+            width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,123,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            border-color: #007bff;
+        }
+        .card:hover::before {
+            left: 100%;
+        }
+        .card i {
+            font-size: 3rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+        .card h3 {
+            margin-top: 0;
+            color: #333;
+            font-size: 1.5rem;
+        }
+        .card p {
+            margin-bottom: 0;
+            color: #666;
+        }
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <h1><i class="fas fa-bolt"></i> EE Infographics</h1>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+    <section class="hero" id="home">
+        <h1>Electrical Engineering Infographics</h1>
+        <p>Visualize Complex Concepts - Master Electrical Engineering Through Interactive Diagrams and Visual Learning</p>
+    </section>
+    <section class="categories" id="categories">
+        <div class="category">
+            <h2>OOP</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/oop/chapter1.html'">
+                    <i class="fas fa-code"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/oop/chapter2.html'">
+                    <i class="fas fa-cubes"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/oop/chapter3.html'">
+                    <i class="fas fa-inheritance"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/oop/chapter4.html'">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/oop/chapter5.html'">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Signal and System Analysis</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter1.html'">
+                    <i class="fas fa-wave-square"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter2.html'">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter3.html'">
+                    <i class="fas fa-signal"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter4.html'">
+                    <i class="fas fa-filter"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/signal_and_system_analysis/chapter5.html'">
+                    <i class="fas fa-microphone"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Computational Methods</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/computational_methods/chapter1.html'">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/computational_methods/chapter2.html'">
+                    <i class="fas fa-square-root-alt"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/computational_methods/chapter3.html'">
+                    <i class="fas fa-chart-area"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/computational_methods/chapter4.html'">
+                    <i class="fas fa-matrix"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/computational_methods/chapter5.html'">
+                    <i class="fas fa-brain"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Applied Electronics I</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter1.html'">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter2.html'">
+                    <i class="fas fa-diode"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter3.html'">
+                    <i class="fas fa-transistor"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter4.html'">
+                    <i class="fas fa-amplifier"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_i/chapter5.html'">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Workshop 2</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/workshop_2/chapter1.html'">
+                    <i class="fas fa-tools"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/workshop_2/chapter2.html'">
+                    <i class="fas fa-screwdriver"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/workshop_2/chapter3.html'">
+                    <i class="fas fa-wrench"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/workshop_2/chapter4.html'">
+                    <i class="fas fa-multimeter"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/workshop_2/chapter5.html'">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Applied Electronics Lab</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter1.html'">
+                    <i class="fas fa-flask"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter2.html'">
+                    <i class="fas fa-oscilloscope"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter3.html'">
+                    <i class="fas fa-signal"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter4.html'">
+                    <i class="fas fa-circuit"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/applied_electronics_lab/chapter5.html'">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+        <div class="category">
+            <h2>Materials</h2>
+            <div class="cards">
+                <div class="card" onclick="window.location.href='Courses/materials/chapter1.html'">
+                    <i class="fas fa-atom"></i>
+                    <h3>Chapter 1</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/materials/chapter2.html'">
+                    <i class="fas fa-magnet"></i>
+                    <h3>Chapter 2</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/materials/chapter3.html'">
+                    <i class="fas fa-conductor"></i>
+                    <h3>Chapter 3</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/materials/chapter4.html'">
+                    <i class="fas fa-insulator"></i>
+                    <h3>Chapter 4</h3>
+                </div>
+                <div class="card" onclick="window.location.href='Courses/materials/chapter5.html'">
+                    <i class="fas fa-cogs"></i>
+                    <h3>Chapter 5</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer id="contact">
+        <p>&copy; 2025 Electrical Engineering Infographics. All rights reserved. <i class="fas fa-envelope"></i> contact@ee-infographics.com</p>
+    </footer>
+</body>
+</html>
