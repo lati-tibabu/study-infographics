@@ -3,65 +3,399 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 2 - Applied Electronics I</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Chapter 2: Semiconductor Diodes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        nav {
-            background-color: rgba(0, 123, 255, 0.9);
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        nav h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-        }
-        nav li {
-            margin-left: 2rem;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        nav a:hover {
-            color: #ffd700;
+        /* Color Palette (Diode Focused) */
+        :root {
+            --color-primary: #0077B6; /* P-Type / Anode Blue */
+            --color-secondary: #00B4D8; /* General Accent */
+            --color-accent1: #FB8500; /* N-Type / Cathode Orange */
+            --color-red: #EF4444; /* Forward Bias / High Current */
+            --color-green: #10B981; /* Reverse Bias / Low Current */
+            --color-breakdown: #FFB703; /* Breakdown Yellow */
+            --color-text-dark: #222;
+            --color-text-light: #555;
+            --color-bg: #f8f9fa;
+            --color-card: #ffffff;
         }
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-dark);
         }
-        h1 {
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            height: 450px;
+        }
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        /* Diode Biasing styles */
+        .diode-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        .diode-segment {
+            padding: 1.5rem 0.5rem;
             text-align: center;
-            padding: 2rem;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            min-width: 80px;
         }
-        p {
-            text-align: center;
-            padding: 1rem;
+        .diode-p { background-color: var(--color-primary); border-radius: 8px 0 0 8px; }
+        .diode-n { background-color: var(--color-accent1); border-radius: 0 8px 8px 0; }
+        .depletion-bar {
+            background-color: #ddd;
+            height: 10px;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 50%;
+            border: 1px dashed var(--color-text-light);
         }
+        .junction-line {
+            position: absolute;
+            height: 100%;
+            width: 2px;
+            background-color: var(--color-text-dark);
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .battery-pole {
+            font-size: 2rem;
+            font-weight: 900;
+            line-height: 1;
+            padding: 0 0.5rem;
+        }
+        .battery-line {
+            height: 40px;
+            width: 1px;
+            background-color: var(--color-text-dark);
+            margin: 0 0.5rem;
+        }
+        .battery-line.long { height: 50px; }
+        .battery-line.short { height: 30px; }
     </style>
 </head>
-<body>
-    <nav>
-        <h1><i class="fas fa-bolt"></i> EE Infographics</h1>
-        <ul>
-            <li><a href="../index.html#home">Home</a></li>
-            <li><a href="../index.html#categories">Categories</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="../index.html#contact">Contact</a></li>
-        </ul>
-    </nav>
-    <h1>Chapter 2</h1>
-    <p>Placeholder for Chapter 2 of Applied Electronics I.</p>
+<body class="leading-relaxed">
+
+    <header class="w-full p-8" style="background-color: var(--color-primary);">
+        <h1 class="text-4xl md:text-5xl font-bold text-white text-center">Chapter 2: Semiconductor Diodes</h1>
+        <p class="text-xl text-white text-center mt-2 opacity-90">The Essential One-Way Electrical Valve</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-8">
+
+            <!-- Section 1: P-N Junction at Equilibrium -->
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-3xl font-bold mb-4" style="color: var(--color-primary);">1. The P-N Junction at Equilibrium</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                    <div class="lg:col-span-1">
+                        <h3 class="text-xl font-semibold mb-2" style="color: var(--color-primary);">Anode Meets Cathode</h3>
+                        <p class="text-base" style="color: var(--color-text-light);">
+                            A diode is created when <strong>P-type</strong> (majority holes) and <strong>N-type</strong> (majority electrons) materials are joined.
+                        </p>
+                        <ul class="list-disc list-inside mt-3 space-y-1 text-sm">
+                            <li style="color: var(--color-primary);">P-side: <strong>Anode</strong></li>
+                            <li style="color: var(--color-accent1);">N-side: <strong>Cathode</strong></li>
+                        </ul>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <h3 class="text-xl font-semibold text-center mb-3">The Depletion Region and \(V_0\)</h3>
+                        <div class="flex flex-col space-y-4 items-center">
+                            <div class="flex w-full max-w-sm relative mx-auto rounded-lg overflow-hidden shadow-md">
+                                <div class="diode-segment diode-p w-1/2">P-Type</div>
+                                <div class="diode-segment diode-n w-1/2">N-Type</div>
+                                <div class="depletion-bar w-2/3" style="width: 66%;">
+                                    <div class="junction-line"></div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold w-full max-w-xs text-center">
+                                <span style="color: var(--color-primary);">Fixed Acceptor Ions (&#x2212;)</span> | <span style="color: var(--color-accent1);">Fixed Donor Ions (+)</span>
+                            </div>
+                        </div>
+                        <p class="text-sm mt-3 text-center" style="color: var(--color-text-light);">
+                            Diffusion causes carriers to recombine, creating an area devoid of mobile charge carriers: the <strong>Depletion Region</strong>. The resulting fixed charges build an internal <strong>Built-in Potential (\(V_0\))</strong>.
+                        </p>
+                        <div class="flex justify-around mt-4">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" style="color: var(--color-primary);">~0.7 V</div>
+                                <div class="text-sm font-semibold">Silicon (\(V_0\))</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold" style="color: var(--color-accent1);">~0.3 V</div>
+                                <div class="text-sm font-semibold">Germanium (\(V_0\))</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Diode Biasing -->
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-3xl font-bold mb-4" style="color: var(--color-red);">2. Diode Biasing: The Key to Control</h2>
+                <p class="mb-6 text-base" style="color: var(--color-text-light);">
+                    Applying an external DC voltage determines if the diode acts as a <strong>short circuit (ON)</strong> or an <strong>open circuit (OFF)</strong>.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Forward Bias -->
+                    <div class="p-4 rounded-xl border-4" style="border-color: var(--color-red);">
+                        <h3 class="text-xl font-semibold text-center mb-3" style="color: var(--color-red);">Forward Bias (The ON State)</h3>
+                        <div class="diode-diagram">
+                            <span class="battery-pole" style="color: var(--color-red);">+</span>
+                            <div class="battery-line long"></div>
+                            <div class="battery-line short"></div>
+                            <span class="battery-pole" style="color: var(--color-green);">&#x2212;</span>
+
+                            <div class="flex w-1/2 max-w-[150px] relative mx-4 rounded-lg overflow-hidden shadow-md">
+                                <div class="diode-segment diode-p w-1/2">P</div>
+                                <div class="diode-segment diode-n w-1/2">N</div>
+                                <div class="depletion-bar w-1/4" style="width: 25%; background-color: var(--color-red); opacity: 0.2;"></div>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
+                            <li><strong>Connection:</strong> Anode (P) connected to battery <strong>Positive</strong>.</li>
+                            <li><strong>Effect:</strong> External voltage (\(V_{ext}\)) opposes the built-in potential (\(V_0\)).</li>
+                            <li><strong>Outcome:</strong> Depletion region <strong>narrows</strong>. If \(V_{ext} > V_0\), majority carriers flow, resulting in high current.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Reverse Bias -->
+                    <div class="p-4 rounded-xl border-4" style="border-color: var(--color-green);">
+                        <h3 class="text-xl font-semibold text-center mb-3" style="color: var(--color-green);">Reverse Bias (The OFF State)</h3>
+                        <div class="diode-diagram">
+                            <span class="battery-pole" style="color: var(--color-green);">&#x2212;</span>
+                            <div class="battery-line short"></div>
+                            <div class="battery-line long"></div>
+                            <span class="battery-pole" style="color: var(--color-red);">+</span>
+
+                            <div class="flex w-1/2 max-w-[150px] relative mx-4 rounded-lg overflow-hidden shadow-md">
+                                <div class="diode-segment diode-p w-1/2">P</div>
+                                <div class="diode-segment diode-n w-1/2">N</div>
+                                <div class="depletion-bar w-5/6" style="width: 83%; background-color: var(--color-green); opacity: 0.2;"></div>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside mt-4 space-y-1 text-sm">
+                            <li><strong>Connection:</strong> Anode (P) connected to battery <strong>Negative</strong>.</li>
+                            <li><strong>Effect:</strong> External voltage reinforces the built-in potential (\(V_0\)).</li>
+                            <li><strong>Outcome:</strong> Depletion region <strong>widens</strong>. Only a small, constant <strong>Reverse Saturation Current</strong> (\(I_s\)) flows due to minority carriers.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: V-I Characteristics -->
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-3xl font-bold mb-4" style="color: var(--color-primary);">3. V-I Characteristics Curve</h2>
+                <p class="mb-4 text-base" style="color: var(--color-text-light);">
+                    The Voltage-Current curve is the signature of the diode. It defines three distinct operating regions across the voltage axis (V).
+                </p>
+                <div class="chart-container">
+                    <canvas id="diodeVIChart"></canvas>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 text-center">
+                    <div class="p-3 rounded-lg shadow-inner" style="background-color: var(--color-red); color: white;">
+                        <h4 class="font-bold text-xl">Forward Region</h4>
+                        <p class="text-sm">Current is negligible until the <strong>Knee Voltage</strong> (\(V_k\)) is reached, after which current rises exponentially.</p>
+                    </div>
+                    <div class="p-3 rounded-lg shadow-inner" style="background-color: var(--color-secondary); color: white;">
+                        <h4 class="font-bold text-xl">Reverse Saturation</h4>
+                        <p class="text-sm">A near-zero current (\(I_s\)) flows. The diode maintains its OFF state, acting like an <strong>Open Circuit</strong>.</p>
+                    </div>
+                    <div class="p-3 rounded-lg shadow-inner" style="background-color: var(--color-breakdown); color: var(--color-text-dark);">
+                        <h4 class="font-bold text-xl">Breakdown Region</h4>
+                        <p class="text-sm">If reverse voltage reaches <strong>Breakdown Voltage</strong> (\(V_{BR}\)), the junction fails, and current spikes dangerously high.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 4: Equivalent Models -->
+            <section class="bg-white rounded-lg shadow-xl p-6">
+                <h2 class="text-3xl font-bold mb-4" style="color: var(--color-accent1);">4. Diode Equivalent Circuits (Forward Bias)</h2>
+                <p class="mb-6 text-base" style="color: var(--color-text-light);">
+                    For circuit analysis, the complex diode is simplified into three practical models.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                    <div class="p-4 rounded-lg border border-gray-300">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--color-primary);">Ideal Model</h3>
+                        <p class="text-sm font-semibold mb-2">Diode acts as a <strong>Short Circuit</strong>.</p>
+                        <p class="text-sm" style="color: var(--color-text-light);">Assumes \(V_k = 0\text{V}\) and \(r_d = 0\ \Omega\). Simplest for quick checks.</p>
+                        <p class="mt-2 text-2xl font-mono text-gray-500">---</p>
+                    </div>
+                    <div class="p-4 rounded-lg border border-gray-300">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--color-red);">Piecewise-Linear Model</h3>
+                        <p class="text-sm font-semibold mb-2">Battery + <strong>Ideal Diode</strong>.</p>
+                        <p class="text-sm" style="color: var(--color-text-light);">Includes the <strong>Knee Voltage</strong> (\(V_k \approx 0.7\text{V}\) for Si) as a voltage source in series.</p>
+                        <p class="mt-2 text-2xl font-mono text-gray-500">[Battery Symbol]</p>
+                    </div>
+                    <div class="p-4 rounded-lg border border-gray-300">
+                        <h3 class="text-xl font-bold mb-2" style="color: var(--color-green);">Full Practical Model</h3>
+                        <p class="text-sm font-semibold mb-2">Battery + Resistor + <strong>Ideal Diode</strong>.</p>
+                        <p class="text-sm" style="color: var(--color-text-light);">Includes \(V_k\) and the <strong>Bulk Resistance</strong> (\(r_d \approx 1-10\ \Omega\)) for maximum accuracy.</p>
+                        <p class="mt-2 text-2xl font-mono text-gray-500">[Battery & Resistor]</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="text-center p-6 mt-8" style="background-color: var(--color-text-dark);">
+        <p class="text-sm text-gray-300">Infographic generated for Applied Electronics I: Chapter 2 (Semiconductor Diodes).</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Utility Functions ---
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels?.[item.dataIndex];
+                if (label) {
+                    return Array.isArray(label) ? label.join(' ') : label;
+                }
+                return tooltipItems[0].dataset.label || '';
+            };
+
+            const sharedOptions = {
+                maintainAspectRatio: false,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback,
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                label += `V: ${context.parsed.x.toFixed(2)}V, I: ${context.parsed.y.toFixed(2)}mA`;
+                                return label;
+                            }
+                        },
+                        backgroundColor: '#333',
+                        titleFont: { size: 14 },
+                        bodyFont: { size: 12 },
+                        padding: 10,
+                        cornerRadius: 4
+                    },
+                    legend: {
+                        labels: {
+                            font: { size: 12 },
+                            color: '#555'
+                        }
+                    }
+                }
+            };
+
+            // --- Chart 1: Diode V-I Characteristics ---
+            const ctxVI = document.getElementById('diodeVIChart');
+            if (ctxVI) {
+                const colors = getComputedStyle(document.documentElement);
+                const colorRed = colors.getPropertyValue('--color-red').trim();
+                const colorBreakdown = colors.getPropertyValue('--color-breakdown').trim();
+                const colorSecondary = colors.getPropertyValue('--color-secondary').trim();
+
+                new Chart(ctxVI, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            // Forward Bias (Knee voltage and exponential rise)
+                            {
+                                label: 'Forward Bias',
+                                data: [
+                                    { x: 0, y: 0 },
+                                    { x: 0.4, y: 0.1 },
+                                    { x: 0.6, y: 2 },
+                                    { x: 0.7, y: 10 }, // Knee/Turn-on Voltage (V_k)
+                                    { x: 0.75, y: 30 },
+                                    { x: 0.8, y: 50 },
+                                    { x: 0.85, y: 70 },
+                                    { x: 0.9, y: 100 }
+                                ],
+                                borderColor: colorRed,
+                                backgroundColor: colorRed,
+                                showLine: true,
+                                fill: false,
+                                tension: 0.3,
+                                pointRadius: (context) => context.dataIndex === 3 ? 5 : 2, // Highlight knee point
+                                pointBackgroundColor: (context) => context.dataIndex === 3 ? colorRed : colorSecondary,
+                                pointBorderColor: '#fff',
+                            },
+                            // Reverse Bias (Saturation current and Breakdown)
+                            {
+                                label: 'Reverse Bias',
+                                data: [
+                                    { x: 0, y: 0 },
+                                    { x: -10, y: -0.01 },
+                                    { x: -30, y: -0.01 }, // Reverse Saturation Region (I_s)
+                                    { x: -48, y: -0.01 },
+                                    { x: -50, y: -50 }, // Breakdown Voltage (V_BR)
+                                    { x: -50.1, y: -100 } 
+                                ],
+                                borderColor: colorBreakdown,
+                                backgroundColor: colorBreakdown,
+                                showLine: true,
+                                fill: false,
+                                tension: 0.05,
+                                pointRadius: (context) => context.dataIndex === 4 ? 5 : 2, // Highlight breakdown point
+                                pointBackgroundColor: (context) => context.dataIndex === 4 ? colorBreakdown : colorSecondary,
+                                pointBorderColor: '#fff',
+                            }
+                        ]
+                    },
+                    options: {
+                        ...sharedOptions,
+                        plugins: {
+                            ...sharedOptions.plugins,
+                            legend: { position: 'top' }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear',
+                                position: 'center',
+                                min: -55,
+                                max: 1,
+                                title: {
+                                    display: true,
+                                    text: 'Voltage (V) (Forward + / Reverse -)',
+                                    color: '#555'
+                                },
+                                ticks: { color: '#555' },
+                                grid: { color: 'rgba(0,0,0,0.1)' }
+                            },
+                            y: {
+                                type: 'linear',
+                                position: 'center',
+                                min: -105,
+                                max: 105,
+                                title: {
+                                    display: true,
+                                    text: 'Current (mA) (Forward + / Reverse -)',
+                                    color: '#555'
+                                },
+                                ticks: { color: '#555' },
+                                grid: { color: 'rgba(0,0,0,0.1)' }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
