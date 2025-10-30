@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Computing Concepts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font import for aesthetics */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+        }
+        .concept-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <header class="text-center py-8 mb-8 bg-white rounded-xl shadow-lg">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-blue-800">Core Computing & OOP Concepts</h1>
+            <p class="mt-2 text-xl text-gray-600">Short and precise explanations with multiple examples.</p>
+        </header>
+
+        <!-- Grid for Concept Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- CARD 1: BINARY -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-purple-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-purple-600">0|1</span>
+                    <h2 class="text-2xl font-bold text-gray-900">BINARY</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A base-2 numbering system using only two digits: <strong>0</strong> and <strong>1</strong>. It is the fundamental, native language of all digital computers.
+                </p>
+                <div class="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                    <p class="font-semibold text-purple-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">Decimal 13 = <span class="text-red-600">1101</span> (Binary)</code>
+                    <code class="block mt-1 text-sm font-mono">Decimal 5 = <span class="text-red-600">101</span> (Binary)</code>
+                </div>
+            </div>
+
+            <!-- CARD 2: OCTAL -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-green-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-green-600">0-7</span>
+                    <h2 class="text-2xl font-bold text-gray-900">OCTAL</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A base-8 numbering system using digits <strong>0</strong> through <strong>7</strong>. It was historically used as a compact representation of binary data.
+                </p>
+                <div class="p-3 bg-green-50 rounded-lg border border-green-200">
+                    <p class="font-semibold text-green-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">Decimal 15 = <span class="text-red-600">17</span> (Octal)</code>
+                    <code class="block mt-1 text-sm font-mono">Decimal 9 = <span class="text-red-600">11</span> (Octal)</code>
+                </div>
+            </div>
+
+            <!-- CARD 3: HEXADECIMAL -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-yellow-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-yellow-600">0-F</span>
+                    <h2 class="text-2xl font-bold text-gray-900">HEXADECIMAL</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A base-16 numbering system using digits <strong>0-9</strong> and letters <strong>A-F</strong>. Used for web color codes (e.g., `#FF0000`) and memory addresses.
+                </p>
+                <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="font-semibold text-yellow-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">Decimal 255 = <span class="text-red-600">FF</span> (Hexadecimal)</code>
+                    <code class="block mt-1 text-sm font-mono">Web Color White = <span class="text-red-600">#FFFFFF</span> (Hexadecimal)</code>
+                </div>
+            </div>
+
+            <!-- CARD 4: UNICODE -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-red-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-red-600">🌍</span>
+                    <h2 class="text-2xl font-bold text-gray-900">UNICODE</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A universal character encoding standard that assigns a unique number to every character across all languages and scripts globally.
+                </p>
+                <div class="p-3 bg-red-50 rounded-lg border border-red-200">
+                    <p class="font-semibold text-red-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">The character 'é' is represented by <span class="text-red-600">U+00E9</span>.</code>
+                    <code class="block mt-1 text-sm font-mono">The Greek capital letter Omega (Ω) is <span class="text-red-600">U+03A9</span>.</code>
+                </div>
+            </div>
+
+            <!-- CARD 5: ASCII -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-cyan-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-cyan-600">A-Z</span>
+                    <h2 class="text-2xl font-bold text-gray-900">ASCII</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    (American Standard Code for Information Interchange). A 7-bit character encoding primarily for the English alphabet, digits, and control codes. It is a subset of Unicode.
+                </p>
+                <div class="p-3 bg-cyan-50 rounded-lg border border-cyan-200">
+                    <p class="font-semibold text-cyan-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">The letter 'A' is represented by decimal <span class="text-red-600">65</span>.</code>
+                    <code class="block mt-1 text-sm font-mono">The Tab control code is represented by decimal <span class="text-red-600">9</span>.</code>
+                </div>
+            </div>
+
+            <!-- CARD 6: METHOD (OOP) -->
+            <div class="concept-card bg-white p-6 rounded-2xl shadow-xl border-t-4 border-indigo-500">
+                <div class="flex items-center space-x-3 mb-4">
+                    <span class="text-3xl font-bold text-indigo-600">{ }</span>
+                    <h2 class="text-2xl font-bold text-gray-900">METHOD (OOP)</h2>
+                </div>
+                <p class="text-gray-700 leading-relaxed mb-4">
+                    A function that is associated with an object or class. It defines the <strong>behavior</strong> or actions an object can perform.
+                </p>
+                <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <p class="font-semibold text-indigo-700">Examples:</p>
+                    <code class="block mt-1 text-sm font-mono">If <i>Dog</i> is a class, <span class="text-red-600">dog.bark()</span> is a method (Python).</code>
+                    <code class="block mt-1 text-sm font-mono">If <i>Car</i> is a class, <span class="text-red-600">car.startEngine()</span> is a method (Java).</code>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="text-center mt-12 pt-6 border-t border-gray-200 text-gray-500">
+            <p>&copy; Computing Concepts Explained</p>
+        </footer>
+    </div>
+
+</body>
+</html>
