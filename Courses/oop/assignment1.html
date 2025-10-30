@@ -46,6 +46,10 @@
                     <code class="block mt-1 text-sm font-mono">Decimal 13 = <span class="text-red-600">1101</span> (Binary)</code>
                     <code class="block mt-1 text-sm font-mono">Decimal 5 = <span class="text-red-600">101</span> (Binary)</code>
                 </div>
+                <button onclick="toggleDetails('binary')" class="mt-4 px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600">More</button>
+                <div id="binary-details" class="hidden mt-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
+                    <p class="text-gray-700">Binary is essential in computing because digital systems operate using transistors that can be in one of two states: on or off, represented by 1 or 0. Each binary digit is called a bit, and combinations of bits form bytes (8 bits), which can represent numbers, characters, and more.</p>
+                </div>
             </div>
 
             <!-- CARD 2: OCTAL -->
@@ -61,6 +65,10 @@
                     <p class="font-semibold text-green-700">Examples:</p>
                     <code class="block mt-1 text-sm font-mono">Decimal 15 = <span class="text-red-600">17</span> (Octal)</code>
                     <code class="block mt-1 text-sm font-mono">Decimal 9 = <span class="text-red-600">11</span> (Octal)</code>
+                </div>
+                <button onclick="toggleDetails('octal')" class="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">More</button>
+                <div id="octal-details" class="hidden mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                    <p class="text-gray-700">Octal was popular in early computing, especially with systems like PDP-8, because it directly represents 3-bit groups from binary. Each octal digit corresponds to three binary digits, making conversion straightforward.</p>
                 </div>
             </div>
 
@@ -78,6 +86,10 @@
                     <code class="block mt-1 text-sm font-mono">Decimal 255 = <span class="text-red-600">FF</span> (Hexadecimal)</code>
                     <code class="block mt-1 text-sm font-mono">Web Color White = <span class="text-red-600">#FFFFFF</span> (Hexadecimal)</code>
                 </div>
+                <button onclick="toggleDetails('hex')" class="mt-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">More</button>
+                <div id="hex-details" class="hidden mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                    <p class="text-gray-700">Hexadecimal is widely used in programming for representing binary data compactly. Each hex digit represents four binary bits, making it easy to convert between hex and binary. It's also used in HTML/CSS for colors and in memory dumps.</p>
+                </div>
             </div>
 
             <!-- CARD 4: UNICODE -->
@@ -93,6 +105,10 @@
                     <p class="font-semibold text-red-700">Examples:</p>
                     <code class="block mt-1 text-sm font-mono">The character 'é' is represented by <span class="text-red-600">U+00E9</span>.</code>
                     <code class="block mt-1 text-sm font-mono">The Greek capital letter Omega (Ω) is <span class="text-red-600">U+03A9</span>.</code>
+                </div>
+                <button onclick="toggleDetails('unicode')" class="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">More</button>
+                <div id="unicode-details" class="hidden mt-4 p-3 bg-red-50 rounded-lg border border-red-200">
+                    <p class="text-gray-700">Unicode supports over 143,000 characters from various scripts, including emojis. It ensures consistent text representation across different platforms and languages, solving issues with older encodings like ASCII that only supported English.</p>
                 </div>
             </div>
 
@@ -110,6 +126,10 @@
                     <code class="block mt-1 text-sm font-mono">The letter 'A' is represented by decimal <span class="text-red-600">65</span>.</code>
                     <code class="block mt-1 text-sm font-mono">The Tab control code is represented by decimal <span class="text-red-600">9</span>.</code>
                 </div>
+                <button onclick="toggleDetails('ascii')" class="mt-4 px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600">More</button>
+                <div id="ascii-details" class="hidden mt-4 p-3 bg-cyan-50 rounded-lg border border-cyan-200">
+                    <p class="text-gray-700">ASCII uses 7 bits for 128 characters, including printable characters and control codes. Extended ASCII (8 bits) adds more symbols. It's the basis for many file formats and protocols, though Unicode has largely replaced it for international text.</p>
+                </div>
             </div>
 
             <!-- CARD 6: METHOD (OOP) -->
@@ -126,6 +146,10 @@
                     <code class="block mt-1 text-sm font-mono">If <i>Dog</i> is a class, <span class="text-red-600">dog.bark()</span> is a method (Python).</code>
                     <code class="block mt-1 text-sm font-mono">If <i>Car</i> is a class, <span class="text-red-600">car.startEngine()</span> is a method (Java).</code>
                 </div>
+                <button onclick="toggleDetails('method')" class="mt-4 px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600">More</button>
+                <div id="method-details" class="hidden mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-200">
+                    <p class="text-gray-700">In OOP, methods can be instance methods (operating on object data), static methods (class-level), or special methods like constructors. They encapsulate behavior, promoting code reusability and modularity.</p>
+                </div>
             </div>
 
         </div>
@@ -134,6 +158,13 @@
             <p>&copy; Computing Concepts Explained</p>
         </footer>
     </div>
+
+    <script>
+        function toggleDetails(id) {
+            const el = document.getElementById(id + '-details');
+            el.classList.toggle('hidden');
+        }
+    </script>
 
 </body>
 </html>
