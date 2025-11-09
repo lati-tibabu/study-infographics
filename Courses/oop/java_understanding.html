@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Core Concepts - Light Theme</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-light: #FFFFFF;
+            --bg-med: #F9FAFB;
+            --bg-dark: #E5E7EB;
+            --text-primary: #1F2937;
+            --text-secondary: #4B5563;
+            --accent: #10B981; /* Green accent */
+            --accent-hover: #059669;
+            --border-color: #D1D5DB;
+            
+            --code-bg: #F3F4F6;
+            --code-keyword: #8B5CF6; /* Purple */
+            --code-type: #EC4899; /* Pink */
+            --code-string: #10B981; /* Green */
+            --code-comment: #6B7280;
+            --code-number: #F59E0B; /* Amber */
+            --code-fn: #3B82F6; /* Blue */
+            --code-annotation: #EF4444; /* Red */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-med);
+            color: var(--text-primary);
+            /* display: flex; */ /* Removed flex display */
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* --- Sidebar Navigation --- */
+        /*
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            background-color: var(--bg-light);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem 1rem;
+            overflow-y: auto;
+            flex-shrink: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        }
+
+        .sidebar h1 {
+            font-size: 1.6rem;
+            color: var(--text-primary);
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+...
+        .sidebar nav a.sub-link.active::before {
+            background-color: var(--accent);
+            opacity: 1;
+        }
+        */
+
+        /* --- Main Content Area --- */
+        .main-content {
+            /* flex-grow: 1; */ /* Removed flex-grow */
+            padding: 0;
+        }
+
+        .module-slide {
+            min-height: 100vh;
+            padding: 3rem 4rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .module-slide:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.8rem;
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            max-width: 80ch;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Content Card --- */
+        .card {
+            background-color: var(--bg-light);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        
+        .card h4 {
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* --- Code Block Styling --- */
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            line-height: 1.5;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+        }
+        
+        :not(pre) > code {
+            background-color: var(--bg-dark);
+            color: var(--code-type);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .code-keyword { color: var(--code-keyword); }
+        .code-type { color: var(--code-type); }
+        .code-string { color: var(--code-string); }
+        .code-comment { color: var(--code-comment); font-style: italic; }
+        .code-number { color: var(--code-number); }
+        .code-fn { color: var(--code-fn); }
+        .code-annotation { color: var(--code-annotation); }
+
+
+        /* --- Visual Diagrams --- */
+        .diagram-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .module1-diagram-container {
+            flex-direction: column;
+        }
+        /* Module 1: Package Structure Diagram */
+        .file-tree {
+            font-family: 'Fira Code', monospace;
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            width: 100%;
+            /* max-width: 400px; */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .file-tree .folder, .file-tree .file {
+            padding-left: 20px;
+            position: relative;
+        }
+        .file-tree .folder::before {
+            content: '📁';
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+        .file-tree .file::before {
+            content: '📄';
+            margin-right: 10px;
+            color: var(--accent);
+            font-size: 0.9em;
+        }
+        .file-tree div {
+            margin-top: 0.5rem;
+        }
+        .file-tree .indent-1 { margin-left: 1.5rem; }
+        .file-tree .indent-2 { margin-left: 3rem; }
+        .file-tree .indent-3 { margin-left: 4.5rem; }
+        .file-tree .file { color: var(--text-secondary); }
+        .file-tree .file strong { color: var(--text-primary); }
+
+        /* Module 2: OOP Pillars Diagram */
+        .pillars-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Slightly smaller cards */
+            gap: 1.5rem;
+            width: 100%;
+        }
+        .pillar-card {
+            background-color: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .pillar-card .icon {
+            font-size: 2.2rem; /* Slightly smaller icon */
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+        }
+        .pillar-card h4 {
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
+        }
+        .pillar-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        /* Module 2: Encapsulation Diagram */
+        .encapsulation-diagram {
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px dashed var(--code-string); /* Green dashed border */
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .encapsulation-diagram h4 {
+            color: var(--text-primary);
+            margin: 0 0 1.5rem 0;
+            font-weight: 600;
+        }
+        .private-field {
+            background-color: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 8px;
+            color: var(--code-type);
+            border: 1px solid var(--border-color);
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+        }
+        .private-field .icon { margin-right: 0.5rem; color: var(--code-keyword);}
+        .public-methods {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+        .method {
+            background-color: var(--code-fn); /* Blue */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'Fira Code', monospace;
+        }
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--accent);
+            position: absolute;
+            top: 60%;
+            font-weight: 700;
+        }
+        .arrow.in { left: 1rem; }
+        .arrow.out { right: 1rem; transform: rotate(180deg); }
+
+        /* Module 2: Inheritance Diagram */
+        .inheritance-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+            font-family: 'Fira Code', monospace;
+            padding: 1rem;
+        }
+        .class-box {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1.5rem; /* Reduced padding */
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            font-size: 0.95rem;
+        }
+        .class-box h4 { margin: 0; color: var(--text-primary); font-size: 1.1rem;}
+        .class-box.parent { border-color: var(--accent); }
+        .arrow-down {
+            font-size: 1.8rem;
+            color: var(--accent);
+            line-height: 1;
+        }
+        
+        /* Module 2: Abstraction Diagram */
+        .abstraction-diagrams {
+            display: flex;
+            justify-content: space-around;
+            gap: 2rem;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        .abstract-box {
+            border: 2px dashed var(--text-secondary);
+            font-style: italic;
+        }
+        .abstract-box h4 { color: var(--text-secondary); }
+        .abstract-box .subtitle { color: var(--text-secondary); }
+
+        .interface-box {
+            border: 2px dashed var(--code-type); /* Pink border */
+        }
+        .interface-box h4 { color: var(--code-type); }
+        .interface-box .subtitle {
+            font-size: 0.8rem;
+            color: var(--code-type);
+            font-style: italic;
+        }
+        
+        /* Module 5: Variable Scope Diagram */
+        .scope-diagram {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Fira Code', monospace;
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
+        }
+        .scope-diagram .class-level {
+            border: 1px dashed var(--accent);
+            padding: 1rem;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+        }
+        .scope-diagram .method-level {
+            background-color: var(--bg-med);
+            border: 1px dashed var(--text-secondary);
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+        }
+        .scope-diagram .var {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+        }
+        .scope-diagram .static { background-color: var(--code-keyword); color: white; }
+        .scope-diagram .instance { background-color: var(--code-type); color: white; }
+        .scope-diagram .local { background-color: var(--code-string); color: white; }
+        .scope-diagram .param { background-color: var(--code-number); color: white; }
+        
+        /* Module 5: Instance vs Static Diagram */
+        .instance-static-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .static-box {
+            background-color: var(--bg-light);
+            border: 2px solid var(--code-keyword);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .object-box {
+            background-color: var(--bg-med);
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 8px;
+            width: 200px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .object-box h4 { margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+        .object-container {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .object-box::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 32px; /* 1rem gap + 1rem margin-bottom */
+            border-left: 2px dashed var(--code-keyword);
+            opacity: 0.7;
+        }
+
+        /* Module 5: Access Modifiers Table */
+        .access-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        .access-table th, .access-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            font-size: 0.95rem;
+        }
+        .access-table th {
+            background-color: var(--bg-dark);
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .access-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+        }
+        .access-table .yes { color: #22c55e; font-weight: 700; font-size: 1.25rem; }
+        .access-table .no { color: #ef4444; font-weight: 700; font-size: 1.25rem; }
+        
+        .mod-public { color: #22c55e; }
+        .mod-protected { color: #eab308; }
+        .mod-default { color: #3b82f6; }
+        .mod-private { color: #ef4444; }
+
+        .access-diagrams {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .access-card {
+            background-color: var(--bg-light);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+        .access-card .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Utility */
+        .flex-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .flex-item {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            body {
+                /* flex-direction: column; */ /* Removed flex-direction */
+                font-size: 15px;
+            }
+            /*
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: static;
+                display: flex;
+                overflow-x: auto;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+...
+            .sidebar nav a.sub-link {
+                display: none; 
+            }
+            */
+            .module-slide {
+                padding: 2rem 1.5rem;
+                min-height: auto;
+            }
+            h2 { font-size: 2rem; margin-bottom: 1rem;}
+            h3 { font-size: 1.4rem; margin-top: 2rem;}
+            h4 { font-size: 1.1rem; margin-top: 1.5rem;}
+            
+            .card {
+                padding: 1.2rem 1.5rem;
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar h1 {
+                font-size: 1.2rem;
+            }
+            .sidebar nav a {
+                font-size: 0.8rem;
+                padding: 0.3rem 0.6rem;
+            }
+            .module-slide {
+                padding: 1.5rem 1rem;
+            }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.2rem; }
+            p, li { font-size: 0.95rem; }
+            pre { font-size: 0.8rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- --- Sidebar Navigation --- -->
+    <!--
+    <aside class="sidebar">
+        <h1><span class="brain-icon">🧠</span> Java Core</h1>
+        <nav>
+            <ul>
+                <li><a href="#module-1" class="active">Module 1: Packages</a></li>
+                <li><a href="#module-2">Module 2: OOP</a></li>
+                <li><a href="#module-2-1" class="sub-link">2.1 Pillars</a></li>
+                <li><a href="#module-2-2" class="sub-link">2.2 Encapsulation</a></li>
+                <li><a href="#module-2-3" class="sub-link">2.3 Inheritance</a></li>
+                <li><a href="#module-2-4" class="sub-link">2.4 Polymorphism</a></li>
+                <li><a href="#module-2-5" class="sub-link">2.5 Abstraction</a></li>
+                <li><a href="#module-3">Module 3: Utilities</a></li>
+                <li><a href="#module-4">Module 4: Practice</a></li>
+                <li><a href="#module-5">Module 5: Variables</a></li>
+                <li><a href="#module-5-2" class="sub-link">5.2 Var Types</a></li>
+                <li><a href="#module-5-4" class="sub-link">5.4 Access Modifiers</a></li>
+            </ul>
+        </nav>
+    </aside>
+    -->
+
+    <!-- --- Main Content "Slides" --- --><main class="main-content">
+
+        <!-- --- Module 1: Packages --- --><section id="module-1" class="module-slide">
+            <h2>Module 1: Packages & Project Structure</h2>
+            
+            <div class="card">
+                <h3 id="module-1-1">1.1 What are Packages?</h3>
+                <p>A <strong>package</strong> in Java is a way to organize classes logically and avoid name conflicts. Think of packages like folders on your computer that group related files.</p>
+                
+                <div class="diagram-container module1-diagram-container">
+                    <div class="card flex-item" style="border: none; box-shadow: none;">
+                        <h4>Types of Packages</h4>
+                        <ul>
+                            <li><strong>Built-in packages</strong> (e.g. <code>java.util</code>, <code>java.io</code>, <code>java.lang</code>)</li>
+                            <li><strong>User-defined packages</strong> (created by developers)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="file-tree flex-item">
+                        <div class="folder">src
+                            <div class="folder indent-1">com
+                                <div class="folder indent-2">school
+                                    <div class="folder indent-3">student
+                                        <div class="file indent-3"><strong>Student.java</strong> (package com.school.student)</div>
+                                    </div>
+                                    <div class="folder indent-3">main
+                                        <div class="file indent-3"><strong>Main.java</strong> (package com.school.main)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 id="module-1-2">1.2 Creating a Package</h3>
+                <p>The <code>package</code> keyword must be the first line in the Java file. The folder structure must match this name.</p>
+                <pre><code class="language-java">// File: src/com/school/student/Student.java
+package com.school.student;
+
+public class Student {
+    public void displayInfo() {
+        System.out.println("Student info displayed.");
+    }
+}</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-1-3">1.3 Using a Package</h3>
+                <p>Use the <code>import</code> keyword to bring in classes from other packages.</p>
+                <pre><code class="language-java">// File: src/com/school/main/Main.java
+package com.school.main;
+
+// Importing a user-defined package
+import com.school.student.Student;
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.displayInfo();
+    }
+}</code></pre>
+                <h4>Key Notes:</h4>
+                <ul>
+                    <li>You can import everything in a package: <code>import com.school.student.*;</code></li>
+                    <li>Default package (no <code>package</code> statement) is <strong>not recommended</strong>.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- --- Module 2: OOP --- --><section id="module-2" class="module-slide">
+            <h2>Module 2: Object-Oriented Programming (OOP)</h2>
+            
+            <div class="card">
+                <h3 id="module-2-1">2.1 The Four Pillars of OOP</h3>
+                <p>OOP is a programming model based on the concept of "objects", which can contain data (fields) and code (methods).</p>
+                <div class="pillars-grid">
+                    <div class="pillar-card">
+                        <div class="icon">🛡️</div>
+                        <h4>Encapsulation</h4>
+                        <p>Hiding internal details and protecting data.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="icon">🌳</div>
+                        <h4>Inheritance</h4>
+                        <p>Reusing code and creating class hierarchies.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="icon">🎭</div>
+                        <h4>Polymorphism</h4>
+                        <p>Same method, different behaviors.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <div class="icon">☁️</div>
+                        <h4>Abstraction</h4>
+                        <p>Hiding complex logic, showing only essentials.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-2-2">2.2 Encapsulation</h3>
+                <p>Achieved using <strong>private fields</strong> and <strong>public getters/setters</strong>. This protects data from being changed incorrectly.</p>
+                
+                <div class="diagram-container">
+                    <div class="encapsulation-diagram">
+                        <h4>BankAccount (Class)</h4>
+                        <div class="private-field">
+                            <span class="icon">🔒</span> private double balance;
+                        </div>
+                        <div class="public-methods">
+                            <span class="method">deposit(double)</span>
+                            <span class="method">getBalance()</span>
+                        </div>
+                        <div class="arrow in">➔</div>
+                        <div class="arrow out">➔</div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <pre><code class="language-java">public class BankAccount {
+    private double balance; // hidden data
+
+    // Public "gate" to modify data
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+        }
+    }
+
+    // Public "gate" to read data
+    public double getBalance() {
+        return balance;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 id="module-2-3">2.3 Inheritance</h3>
+                <p>Lets a class (child) reuse and extend another class's (parent) functionality using <code>extends</code>.</p>
+                
+                <div class="diagram-container">
+                     <div class="inheritance-diagram">
+                        <div class="class-box parent">
+                            <h4>Vehicle</h4>
+                            <code>void start()</code>
+                        </div>
+                        <div class="arrow-down">👇</div>
+                        <div class="class-box">
+                            <h4>Car</h4>
+                            <code>void start()</code> (inherited)<br>
+                            <code>void accelerate()</code> (own)
+                        </div>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <pre><code class="language-java">// Parent class
+public class Vehicle {
+    void start() {
+        System.out.println("Vehicle started");
+    }
+}
+
+// Child class
+public class Car extends Vehicle {
+    void accelerate() {
+        System.out.println("Car accelerating");
+    }
+}
+
+// Usage
+Car c = new Car();
+c.start();       // inherited
+c.accelerate();  // own method</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-2-4">2.4 Polymorphism</h3>
+                <p>Means "many forms." It allows different classes to be treated as the same type (their parent class), but still perform their own unique behaviors.</p>
+                <pre><code class="language-java">class Animal {
+    void sound() { System.out.println("Some sound"); }
+}
+
+class Dog extends Animal {
+    void sound() { System.out.println("Bark"); } // Override
+}
+
+class Cat extends Animal {
+    void sound() { System.out.println("Meow"); } // Override
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // 'a1' is type Animal, but the object is Dog
+        Animal a1 = new Dog();
+        
+        // 'a2' is type Animal, but the object is Cat
+        Animal a2 = new Cat();
+        
+        a1.sound(); // Bark (Dog's version runs)
+        a2.sound(); // Meow (Cat's version runs)
+    }
+}</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-2-5">2.5 Abstraction</h3>
+                <p>Hides complex logic using <strong>abstract classes</strong> or <strong>interfaces</strong>. It defines a "contract" that other classes must follow.</p>
+                
+                <div class="abstraction-diagrams">
+                    <div class="flex-item">
+                        <h4>Using Abstract Class</h4>
+                        <p>A class that cannot be instantiated. Can have both abstract (unimplemented) and regular methods.</p>
+                        <div class="inheritance-diagram">
+                            <div class="class-box abstract-box">
+                                <h4>Shape</h4>
+                                <code>abstract void draw()</code>
+                            </div>
+                            <div class="arrow-down">👇</div>
+                            <div class="class-box">
+                                <h4>Circle</h4>
+                                <code>void draw() { ... }</code>
+                            </div>
+                        </div>
+                        <pre><code class="language-java">abstract class Shape {
+    abstract void draw(); // No implementation
+}
+
+class Circle extends Shape {
+    void draw() { 
+        System.out.println("Drawing a circle"); 
+    }
+}</code></pre>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h4>Using Interface</h4>
+                        <p>A 100% abstract "contract." All methods are abstract by default. A class <code>implements</code> an interface.</p>
+                         <div class="inheritance-diagram">
+                            <div class="class-box interface-box">
+                                <span class="subtitle">&lt;&lt;interface&gt;&gt;</span>
+                                <h4>Drawable</h4>
+                                <code>void draw()</code>
+                            </div>
+                            <div class="arrow-down">👇</div>
+                            <div class="class-box">
+                                <h4>Rectangle</h4>
+                                <code>public void draw() { ... }</code>
+                            </div>
+                        </div>
+                        <pre><code class="language-java">interface Drawable {
+    void draw(); // Automatically public & abstract
+}
+
+class Rectangle implements Drawable {
+    public void draw() {
+        System.out.println("Drawing rectangle");
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- --- Module 3: Utilities --- --><section id="module-3" class="module-slide">
+            <h2>Module 3: Common Java Utility Classes</h2>
+            
+            <div class="card">
+                <h3 id="module-3-1">3.1 Scanner Class</h3>
+                <p>Used for getting input from the user (e.g., from the keyboard). Found in <code>java.util.Scanner</code>.</p>
+                <pre><code class="language-java">import java.util.Scanner;
+
+public class InputExample {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter name: ");
+        String name = sc.nextLine(); // Reads a full line of text
+
+        System.out.print("Enter age: ");
+        int age = sc.nextInt(); // Reads an integer
+
+        System.out.println("Hello, " + name + ". You are " + age + " years old.");
+
+        sc.close(); // Always close the scanner
+    }
+}</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-3-2">3.2 Math Class</h3>
+                <p>Provides <code>static</code> methods for common mathematical operations. No import needed (it's in <code>java.lang</code>).</p>
+                <pre><code class="language-java">public class MathExample {
+    public static void main(String[] args) {
+        double x = Math.sqrt(25);     // 5.0 (Square root)
+        double y = Math.pow(2, 3);      // 8.0 (2 to the power of 3)
+        double z = Math.random();     // 0.0 to 0.999... (Random number)
+        long rounded = Math.round(2.7); // 3 (Rounds to nearest long)
+        
+        System.out.println("Sqrt: " + x);
+        System.out.println("Pow: " + y);
+        System.out.println("Random: " + z);
+    }
+}</code></pre>
+            </div>
+            
+            <div class="card">
+                <h3 id="module-3-3">3.3 String Class</h3>
+                <p>Strings are <strong>immutable</strong> objects (they cannot be changed) that represent sequences of characters.</p>
+                <pre><code class="language-java">public class StringExample {
+    public static void main(String[] args) {
+        String s1 = "Java";
+        String s2 = "Programming";
+
+        System.out.println(s1.length());         // 4
+        System.out.println(s1.concat(" Rocks")); // "Java Rocks" (s1 is still "Java")
+        System.out.println(s2.toUpperCase());    // "PROGRAMMING"
+        System.out.println(s2.substring(0, 4));  // "Prog" (index 0 up to 4)
+        System.out.println(s1.equals("java"));   // false (case-sensitive)
+        System.out.println(s1.equalsIgnoreCase("java")); // true
+    }
+}</code></pre>
+            </div>
+            
+             <div class="card">
+                <h3 id="module-3-4">3.4 Wrapper Classes</h3>
+                <p>Provide object "wrappers" for primitive types (like <code>int</code>, <code>double</code>). This is needed for collections like <code>ArrayList</code> which can only store objects.</p>
+                <ul>
+                    <li><code>int</code> → <code>Integer</code></li>
+                    <li><code>double</code> → <code>Double</code></li>
+                    <li><code>char</code> → <code>Character</code></li>
+                    <li><code>boolean</code> → <code>Boolean</code></li>
+                </ul>
+                <pre><code class="language-java">public class WrapperExample {
+    public static void main(String[] args) {
+        int x = 10;
+        
+        // Boxing: primitive to Object
+        Integer obj = Integer.valueOf(x); 
+        
+        // Unboxing: Object to primitive
+        int y = obj.intValue();
+        
+        // Autoboxing (done automatically by Java)
+        Integer autoObj = x; // autoboxing
+        int autoY = autoObj; // autounboxing
+        
+        System.out.println(obj);
+    }
+}</code></pre>
+            </div>
+        </section>
+        
+        <!-- --- Module 4: Practice --- --><section id="module-4" class="module-slide">
+            <h2>Module 4: Practice and Integration</h2>
+
+            <div class="card">
+                <h3 id="module-4-1">4.1 Mini Project: Student Management</h3>
+                <p>This example combines concepts: user-defined classes (<code>Student</code>), encapsulation (<code>private</code> fields), constructors, and utility classes (<code>Scanner</code>).</p>
+                <pre><code class="language-java">package com.school.app;
+
+import java.util.Scanner;
+
+// 1. Encapsulated Class
+class Student {
+    private String name;
+    private int age;
+
+    // 2. Constructor
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    // 3. Public Method
+    void display() {
+        System.out.println("Name: " + name + ", Age: " + age);
+    }
+}
+
+// 4. Main Application Class
+public class StudentApp {
+    public static void main(String[] args) {
+        // 5. Using Scanner
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter student name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter age: ");
+        int age = sc.nextInt();
+
+        // 6. Creating an object
+        Student s = new Student(name, age);
+        s.display();
+
+        sc.close();
+    }
+}</code></pre>
+            </div>
+        </section>
+        
+        <!-- --- Module 5: Variables --- --><section id="module-5" class="module-slide">
+            <h2>Module 5: Variables & Access Modifiers</h2>
+            <p>Understanding <strong>variables</strong> and <strong>access control</strong> is central to mastering Java. They define <em>how data is stored</em> and <em>who can access it</em>.</p>
+
+            <div class="card">
+                <h3 id="module-5-2">5.2 Types of Variables (by Scope)</h3>
+                <p>Variables are classified based on <strong>where</strong> and <strong>how</strong> they are declared.</p>
+                
+                <div class="flex-container">
+                    <div class="scope-diagram flex-item">
+                        <strong>public class <span class="code-type">Student</span> {</strong>
+                        <div class="class-level">
+                            <span class="var static">public static String schoolName; // 1. Static</span>
+                            <span class="var instance">private String name; // 2. Instance</span>
+                            
+                            <div class="method-level">
+                                <strong>public void <span class="code-fn">greet</span>(<span class="var param">String greeting</span>) {</strong> // 3. Parameter
+                                <div class="method-level" style="background: var(--bg-dark); margin-top: 0.5rem;">
+                                    <span class="var local">int marks = 95; // 4. Local</span>
+                                    System.out.println(greeting + name);
+                                </div>
+                                <strong>}</strong>
+                            </div>
+                        </div>
+                        <strong>}</strong>
+                    </div>
+                    
+                    <div class="flex-item">
+                        <h4>1. Instance Variables (Non-static)</h4>
+                        <p>Belong to an <strong>object</strong>. Each object gets its own copy (e.g., <code>name</code>, <code>age</code>).</p>
+                        
+                        <h4>2. Static Variables (Class)</h4>
+                        <p>Shared by <strong>all objects</strong> of the class (e.g., <code>schoolName</code>). Accessed via the class: <code>Student.schoolName</code>.</p>
+                        
+                        <h4>3. Local Variables</h4>
+                        <p>Declared inside a method. Only exist <em>within</em> that method (e.g., <code>marks</code>).</p>
+                        
+                        <h4>4. Parameters</h4>
+                        <p>Variables passed into a method (e.g., <code>greeting</code>).</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h4>Visualizing Instance vs. Static Variables</h4>
+                <p>Instance variables are unique to each object. Static variables are shared in one common place.</p>
+                <div class="instance-static-diagram">
+                    <div class="static-box">
+                        <strong>Static:</strong> <code>schoolName = "Adama High"</code>
+                    </div>
+                    <div class="object-container">
+                        <div class="object-box">
+                            <h4>Student s1</h4>
+                            <code>name = "Lati"</code>
+                        </div>
+                        <div class="object-box">
+                            <h4>Student s2</h4>
+                            <code>name = "Hana"</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 id="module-5-4">5.4 Access Modifiers</h3>
+                <p>Access modifiers define <strong>visibility</strong> — who can access classes, fields, and methods.</p>
+                
+                <div class="access-diagrams">
+                    <div class="access-card mod-public">
+                        <div class="icon">🌍</div>
+                        <h4>public</h4>
+                        <p>Accessible from anywhere.</p>
+                    </div>
+                    <div class="access-card mod-protected">
+                        <div class="icon">🛡️</div>
+                        <h4>protected</h4>
+                        <p>Same package + Subclasses.</p>
+                    </div>
+                    <div class="access-card mod-default">
+                        <div class="icon">📦</div>
+                        <h4>default</h4>
+                        <p>Same package only.</p>
+                    </div>
+                    <div class="access-card mod-private">
+                        <div class="icon">🔒</div>
+                        <h4>private</h4>
+                        <p>Same class only.</p>
+                    </div>
+                </div>
+                
+                <table class="access-table">
+                    <thead>
+                        <tr>
+                            <th>Modifier</th>
+                            <th>Same Class</th>
+                            <th>Same Package</th>
+                            <th>Subclass (diff package)</th>
+                            <th>Other Packages (World)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="mod-public"><strong>public</strong></td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                        </tr>
+                        <tr>
+                            <td class="mod-protected"><strong>protected</strong></td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                            <td class="no">❌</td>
+                        </tr>
+                         <tr>
+                            <td class="mod-default"><strong>default</strong> (no keyword)</td>
+                            <td class="yes">✅</td>
+                            <td class="yes">✅</td>
+                            <td class="no">❌</td>
+                            <td class="no">❌</td>
+                        </tr>
+                        <tr>
+                            <td class="mod-private"><strong>private</strong></td>
+                            <td class="yes">✅</td>
+                            <td class="no">❌</td>
+                            <td class="no">❌</td>
+                            <td class="no">❌</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Simple Java Syntax Highlighter ---
+            function highlightJavaCode(element) {
+                let code = element.textContent;
+                
+                // Escape HTML
+                code = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+                // 1. Comments
+                code = code.replace(/(\/\/.+)/g, '<span class="code-comment">$1</span>');
+                
+                // 2. Strings
+                code = code.replace(/(".+?")/g, '<span class="code-string">$1</span>');
+                
+                // 3. Keywords
+                const keywords = ['package', 'import', 'public', 'private', 'protected', 'class', 'interface', 'extends', 'implements', 'static', 'final', 'void', 'int', 'double', 'char', 'boolean', 'long', 'if', 'else', 'for', 'while', 'return', 'new', 'this', 'super', 'abstract', 'try', 'catch', 'finally', 'throws', 'throw'];
+                const keywordRegex = new RegExp(`\\b(${keywords.join('|')})\\b`, 'g');
+                code = code.replace(keywordRegex, '<span class="code-keyword">$1</span>');
+                
+                // 4. Types (Common classes)
+                const types = ['String', 'System', 'Scanner', 'Math', 'Integer', 'Double', 'Character', 'Boolean', 'Object', 'Main', 'Student', 'Vehicle', 'Car', 'Animal', 'Dog', 'Cat', 'Shape', 'Circle', 'Drawable', 'Rectangle', 'BankAccount', 'User', 'StudentApp', 'InputExample', 'MathExample', 'StringExample', 'WrapperExample'];
+                const typeRegex = new RegExp(`\\b(${types.join('|')})\\b`, 'g');
+                code = code.replace(typeRegex, '<span class="code-type">$1</span>');
+                
+                // 5. Functions (method calls)
+                code = code.replace(/(\w+)\s*\(/g, (match, fnName) => {
+                    if (keywords.includes(fnName) || types.includes(fnName)) return match;
+                    return `<span class="code-fn">${fnName}</span>(`;
+                });
+                
+                // 6. Numbers
+                code = code.replace(/(\b\d+\.?\d*\b)/g, '<span class="code-number">$1</span>');
+                
+                // 7. Annotations
+                code = code.replace(/(@\w+)/g, '<span class="code-annotation">$1</span>');
+
+                element.innerHTML = code;
+            }
+
+            document.querySelectorAll('code.language-java').forEach(highlightJavaCode);
+
+            // --- Active Nav Link on Scroll ---
+            /*
+            const sections = document.querySelectorAll('.module-slide, .card h3[id]');
+            const navLinks = document.querySelectorAll('.sidebar nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) {
+                                link.classList.add('active');
+                            }
+                            // Handle parent highlighting
+                            if (id.startsWith(link.getAttribute('href').substring(1)) && link.getAttribute('href').length > 3) {
+                                document.querySelector(`.sidebar nav a[href="#${id.split('-')[0]}-${id.split('-')[1]}"]`).classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { 
+                rootMargin: '-50% 0px -50% 0px', // Activate when in middle of viewport
+                threshold: 0 
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            // Activate first link manually
+            if (navLinks.length > 0) {
+                navLinks[0].classList.add('active');
+            }
+            */
+        });
+    </script>
+
+</body>
+</html>
